@@ -1,48 +1,42 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Github, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { useSmartNavigation } from '@/hooks/useSmartNavigation';
 
 const DEFAULT_FOOTER = {
-  companyName: 'WorkforceAI',
-  tagline: 'Transform your workforce management with intelligent enterprise performance solutions',
-  description:
-    'Empowering organizations with cutting-edge workforce management technology that drives performance, efficiency, and growth.',
-
-  // Company Links
-  companyLinks: [
-    { label: 'About Us', href: '/about' },
-    { label: 'Careers', href: '/careers' },
+  brand: 'EP WMs',
+  description: 'Optimize Enterprise Workforce Performance at Scale with AI-powered workforce management solutions.',
+  links: {
+    product: [
+      { label: 'Features', href: '#features' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'Demo', href: '/demo' },
+      { label: 'API', href: '/api' },
+    ],
+    company: [
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '#contact' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Blog', href: '/blog' },
+    ],
+    support: [
+      { label: 'Help Center', href: '/help' },
+      { label: 'Documentation', href: '/docs' },
+      { label: 'Status', href: '/status' },
+      { label: 'Community', href: '/community' },
+    ],
+    legal: [
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+      { label: 'Security', href: '/security' },
+      { label: 'Compliance', href: '/compliance' },
+    ],
+  },
+  social: [
+    { label: 'Twitter', href: 'https://twitter.com/epwms' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/company/epwms' },
+    { label: 'GitHub', href: 'https://github.com/epwms' },
   ],
-
-  // Legal Links
-  legalLinks: [
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Service', href: '/terms' },
-  ],
-
-  // Social Links
-  socialLinks: [
-    { platform: 'Twitter', href: 'https://twitter.com/workforceai', icon: 'twitter' },
-    { platform: 'LinkedIn', href: 'https://linkedin.com/company/workforceai', icon: 'linkedin' },
-    { platform: 'GitHub', href: 'https://github.com/workforceai', icon: 'github' },
-  ],
-
-  // Contact Info
-  contactEmail: 'hello@workforceai.com',
-  contactPhone: '+1 (555) 123-4567',
-  address: 'San Francisco, CA',
-
-  // Newsletter
-  newsletterTitle: 'Stay Updated',
-  newsletterDescription: 'Get the latest updates on workforce management trends and product news.',
-  newsletterPlaceholder: 'Enter your email',
-  newsletterButtonText: 'Subscribe',
-
-  // Copyright
-  copyrightText: '© 2024 WorkforceAI. All rights reserved.',
+  copyright: '© 2024 EP WMs. All rights reserved.',
 } as const;
 
 type FooterProps = Partial<typeof DEFAULT_FOOTER>;
@@ -52,128 +46,119 @@ export default function Footer(props: FooterProps) {
   const navigate = useSmartNavigation();
 
   const handleLinkClick = (href: string) => {
-    if (href.startsWith('http')) {
-      window.open(href, '_blank', 'noopener,noreferrer');
-    } else {
-      navigate(href);
-    }
-  };
-
-  const renderSocialIcon = (iconType: string) => {
-    switch (iconType) {
-      case 'twitter':
-        return <Twitter className="h-5 w-5" />;
-      case 'linkedin':
-        return <Linkedin className="h-5 w-5" />;
-      case 'github':
-        return <Github className="h-5 w-5" />;
-      default:
-        return <Mail className="h-5 w-5" />;
-    }
+    navigate(href);
   };
 
   return (
-    <footer id="footer" className="bg-background text-foreground border-t border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        {/* Main Footer Content */}
-        <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2">
-          {/* Company Info */}
+    <footer className="bg-muted/30 border-t border-border">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid gap-8 lg:grid-cols-5">
+          {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <h3 className="text-2xl font-bold text-primary mb-2">
-                <span data-editable="companyName">{config.companyName}</span>
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                <span data-editable="tagline">{config.tagline}</span>
-              </p>
-              <p className="text-sm text-muted-foreground max-w-md">
-                <span data-editable="description">{config.description}</span>
-              </p>
+              <button
+                onClick={() => navigate('/')}
+                className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
+                data-editable="brand"
+              >
+                {config.brand}
+              </button>
             </div>
-
-            {/* Contact Info */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                <span data-editable="contactEmail">{config.contactEmail}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4" />
-                <span data-editable="contactPhone">{config.contactPhone}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                <span data-editable="address">{config.address}</span>
-              </div>
+            <p className="text-muted-foreground mb-6 max-w-md">
+              <span data-editable="description">{config.description}</span>
+            </p>
+            <div className="flex space-x-4">
+              {config.social.map((social, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleLinkClick(social.href)}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  data-editable={`social[${idx}].label`}
+                  data-editable-href={`social[${idx}].href`}
+                  data-href={social.href}
+                >
+                  {social.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Company Links */}
+          {/* Links Sections */}
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Company</h4>
+            <h3 className="font-semibold text-foreground mb-4">Product</h3>
             <ul className="space-y-2">
-              {config.companyLinks.map((link, idx) => (
+              {config.links.product.map((link, idx) => (
                 <li key={idx}>
-                  <Button
-                    variant="ghost"
-                    className="h-auto p-0 text-sm text-muted-foreground hover:text-foreground justify-start"
+                  <button
                     onClick={() => handleLinkClick(link.href)}
-                    data-editable-href={`companyLinks[${idx}].href`}
+                    className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                    data-editable={`links.product[${idx}].label`}
+                    data-editable-href={`links.product[${idx}].href`}
                     data-href={link.href}
                   >
-                    <span data-editable={`companyLinks[${idx}].label`}>{link.label}</span>
-                  </Button>
+                    {link.label}
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Legal Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Legal</h4>
+            <h3 className="font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-2">
-              {config.legalLinks.map((link, idx) => (
+              {config.links.company.map((link, idx) => (
                 <li key={idx}>
-                  <Button
-                    variant="ghost"
-                    className="h-auto p-0 text-sm text-muted-foreground hover:text-foreground justify-start"
+                  <button
                     onClick={() => handleLinkClick(link.href)}
-                    data-editable-href={`legalLinks[${idx}].href`}
+                    className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                    data-editable={`links.company[${idx}].label`}
+                    data-editable-href={`links.company[${idx}].href`}
                     data-href={link.href}
                   >
-                    <span data-editable={`legalLinks[${idx}].label`}>{link.label}</span>
-                  </Button>
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Support</h3>
+            <ul className="space-y-2">
+              {config.links.support.map((link, idx) => (
+                <li key={idx}>
+                  <button
+                    onClick={() => handleLinkClick(link.href)}
+                    className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                    data-editable={`links.support[${idx}].label`}
+                    data-editable-href={`links.support[${idx}].href`}
+                    data-href={link.href}
+                  >
+                    {link.label}
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <Separator className="my-8" />
-
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* Copyright */}
-          <div className="text-sm text-muted-foreground">
-            <span data-editable="copyrightText">{config.copyrightText}</span>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground mr-2">Follow us:</span>
-            {config.socialLinks.map((social, idx) => (
-              <Button
+        <div className="border-t border-border mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-muted-foreground text-sm">
+            <span data-editable="copyright">{config.copyright}</span>
+          </p>
+          <div className="flex space-x-6 mt-4 sm:mt-0">
+            {config.links.legal.map((link, idx) => (
+              <button
                 key={idx}
-                variant="ghost"
-                size="sm"
-                className="h-9 w-9 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
-                onClick={() => handleLinkClick(social.href)}
-                data-editable-href={`socialLinks[${idx}].href`}
-                data-href={social.href}
-                aria-label={`Follow us on ${social.platform}`}
+                onClick={() => handleLinkClick(link.href)}
+                className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                data-editable={`links.legal[${idx}].label`}
+                data-editable-href={`links.legal[${idx}].href`}
+                data-href={link.href}
               >
-                {renderSocialIcon(social.icon)}
-              </Button>
+                {link.label}
+              </button>
             ))}
           </div>
         </div>
